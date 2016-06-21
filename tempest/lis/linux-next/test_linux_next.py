@@ -53,6 +53,7 @@ class LinuxNext(manager.LisBase):
         self.position = ('SCSI', 1, 1)
         self.host_name = ""
         self.instance_name = ""
+        self.disk_name = ""
         self.run_ssh = CONF.validation.run_validation and \
             self.image_utils.is_sshable_image(self.image_ref)
         self.ssh_user = CONF.validation.image_ssh_user
