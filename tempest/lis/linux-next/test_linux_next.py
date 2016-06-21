@@ -48,12 +48,10 @@ class LinuxNext(manager.LisBase):
         self.file_system = 'ext4'
         self.sector_size = 512
         self.size = '20GB'
-        self.disks = []
         self.disk_type = 'vhdx'
         self.position = ('SCSI', 1, 1)
         self.host_name = ""
         self.instance_name = ""
-        self.disk_name = ""
         self.run_ssh = CONF.validation.run_validation and \
             self.image_utils.is_sshable_image(self.image_ref)
         self.ssh_user = CONF.validation.image_ssh_user
@@ -149,7 +147,8 @@ class LinuxNext(manager.LisBase):
         self.install_linux_next()
         # self.linux_next_daemons()
         self.stop_vm(self.server_id)
-        self.remove_disk(self.instance_name, self.disk_name)
+        for disk in self.disks:
+            self.remove_disk(self.instance_name, disk)
         snapshot_image = self.create_server_snapshot_nocleanup(
             server=self.instance)
         # boot a second instance from the snapshot
