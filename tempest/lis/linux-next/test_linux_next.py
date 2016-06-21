@@ -146,7 +146,7 @@ class LinuxNext(manager.LisBase):
         self.format_disk(1, 'ext4')
         self.linux_client.mount('sdb1')
         self.install_linux_next()
-        self.linux_next_daemons()
+        # self.linux_next_daemons()
         self.stop_vm(self.server_id)
         self.remove_disk(self.instance_name, self.disk_name)
         snapshot_image = self.create_server_snapshot_nocleanup(
