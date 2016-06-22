@@ -138,7 +138,7 @@ ApplyPatchesAndCompile() {
 
         # Workaround: Enable HyperV Sock functionality. Otherwise, yes "" | make oldconfig won't set this
         sudo sed --in-place -e s:"CONFIG_HYPERV_SOCK=.*":"": ${CONFIG_FILE}
-        echo "CONFIG_HYPERV_SOCK=m" >> ${CONFIG_FILE}
+        sudo echo "CONFIG_HYPERV_SOCK=m" >> ${CONFIG_FILE}
     fi
     echo "make oldconfig: Success"
 
@@ -243,12 +243,12 @@ fi
 
 #
 if is_fedora ; then
-    yum install openssl-devel bc nfs-utils -y
+    sudo yum install openssl-devel bc nfs-utils -y
     if [ $? -ne 0 ]; then
         LogMsg "Error: Unable to install required packages. Kernel compilation might fail."
     fi
 elif is_ubuntu ; then
-    apt-get -y install nfs-common libssl-dev bc
+    sudo apt-get -y install nfs-common libssl-dev bc
     if [ $? -ne 0 ]; then
         LogMsg "ERROR: Unable to install libssl-devel. Aborting..."
     fi
@@ -363,7 +363,7 @@ if [ 1 -eq ${grubversion} ]; then
 fi
 
 # Remove the patch files
-rm -f ~/*.patch
+sudo rm -f ~/*.patch
 
 if [ "true" = "${OVERWRITE_DEFAULT_KERNEL}" ]; then
     # Remove current kernel

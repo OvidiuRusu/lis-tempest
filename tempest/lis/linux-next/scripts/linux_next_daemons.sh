@@ -68,12 +68,12 @@ ConfigRhel()
          if [ $? -ne 0 ]; then
             echo "Error: Unable to create linux folder."
          fi
-    sudo cp /root/linux-next/include/linux/hyperv.h /usr/include/linux
+    sudo cp /mnt/linux-next/include/linux/hyperv.h /usr/include/linux
         if [ $? -ne 0 ]; then
             echo "Error: Unable to copy hyper.h to /usr/include/linux."
             exit 1
         fi
-    sudo cp /root/linux-next/include/uapi/linux/hyperv.h /usr/include/uapi/linux/
+    sudo cp /mnt/linux-next/include/uapi/linux/hyperv.h /usr/include/uapi/linux/
         if [ $? -ne 0 ]; then
             echo "Error: Unable to copy hyperv.h to /usr/include/uapi/linux."
             exit 1
@@ -95,7 +95,7 @@ ConfigRhel()
         fi
 
     echo "Info: Compiling daemons..."
-    make
+    sudo make
         if [ $? -ne 0 ]; then
             echo "Error: Unable to compile daemons."
             exit 1
@@ -209,12 +209,12 @@ ConfigSles()
             echo "Error: unable to create  /usr/include/uapi/linux/ folder."
             exit 1
         fi
-    sudo cp /root/linux-next/include/linux/hyperv.h /usr/include/linux
+    sudo cp /mnt/linux-next/include/linux/hyperv.h /usr/include/linux
         if [ $? -ne 0 ]; then
             echo "Error: Unable to copy hyper.h to /usr/include/linux."
             exit 1
         fi
-    sudo cp /root/linux-next/include/uapi/linux/hyperv.h /usr/include/uapi/linux/
+    sudo cp /mnt/linux-next/include/uapi/linux/hyperv.h /usr/include/uapi/linux/
         if [ $? -ne 0 ]; then
             echo "Error: Unable to copy hyperv.h to /usr/include/uapi/linux."
             exit 1
@@ -235,7 +235,7 @@ ConfigSles()
             exit 1
         fi
     echo "Compiling daemons."
-    make
+    sudo make
         if [ $? -ne 0 ]; then
             echo "Error: Unable to compile daemons."
             exit 1
@@ -340,12 +340,12 @@ ConfigCentos()
          if [ $? -ne 0 ]; then
             echo "Error: Unable to create linux folder."
          fi
-    sudo cp /root/linux-next/include/linux/hyperv.h /usr/include/linux
+    sudo cp /mnt/linux-next/include/linux/hyperv.h /usr/include/linux
         if [ $? -ne 0 ]; then
             echo "Error: Unable to copy hyper.h to /usr/include/linux."
             exit 1
         fi
-    sudo cp /root/linux-next/include/uapi/linux/hyperv.h /usr/include/uapi/linux/
+    sudo cp /mnt/linux-next/include/uapi/linux/hyperv.h /usr/include/uapi/linux/
         if [ $? -ne 0 ]; then
             echo "Error: Unable to copy hyperv.h to /usr/include/uapi/linux."
             exit 1
@@ -366,7 +366,7 @@ ConfigCentos()
             exit 1
         fi
     echo "Compiling daemons."
-    make
+    sudo make
         if [ $? -ne 0 ]; then
             echo "Error: Unable to compile the LIS daemons."
             exit 1
@@ -489,7 +489,7 @@ ConfigUbuntu()
             exit 1
         fi
     echo "Compiling daemons."
-    make
+    sudo make
          if [ $? -ne 0 ]; then
             echo "Error: Unable to compile the LIS daemons!"
             exit 1
@@ -504,7 +504,7 @@ ConfigUbuntu()
         fi
     yes | sudo cp /usr/sbin/hv_vss_daemon /usr/sbin/hv_vss_daemon.old
         if [ $? -ne 0 ]; then
-            echo "Warning: Unable to back up hv-vss-daemon." >>~/summary.log
+            echo "Warning: Unable to back up hv-vss-daemon."
         fi
     yes | sudo cp /usr/sbin/hv_fcopy_daemon /usr/sbin/hv_fcopy_daemon.old
         if [ $? -ne 0 ]; then

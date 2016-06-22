@@ -134,7 +134,9 @@ class LinuxNext(manager.LisBase):
     def test_linux_next(self):
         self.spawn_vm()
         self.stop_vm(self.server_id)
-        self.change_cpu(self.instance_name, 8)
+        vcpu_count = self.get_cpu_settings(self.instance_name)
+        memory_assigned = self.get_ram_settings(self.instance_name)
+        self.change_cpu(self.instance_name, 12)
         self.set_ram_settings(self.instance_name, 8192)
         position = ('SCSI', 0, 1)
         self.add_disk(self.instance_name, self.disk_type,
@@ -145,8 +147,16 @@ class LinuxNext(manager.LisBase):
         self.format_disk(1, 'ext4')
         self.linux_client.mount('sdb1')
         self.install_linux_next()
-        # self.linux_next_daemons()
+
         self.stop_vm(self.server_id)
+        self.start_vm(self.server_id)
+        self._initiate_linux_client(self.floating_ip['floatingip']['floating_ip_address'],
+                                    self.ssh_user, self.keypair['private_key'])
+        self.linux_client.mount('sdb1')
+        self.linux_next_daemons()
+        self.stop_vm(self.server_id)
+        self.change_cpu(self.instance_name, vcpu_count)
+        self.set_ram_settings(self.instance_name, memory_assigned)
         for disk in self.disks:
             self.remove_disk(self.instance_name, disk)
         snapshot_image = self.create_server_snapshot_nocleanup(
