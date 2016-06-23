@@ -13,6 +13,7 @@
 #    under the License.
 
 import os
+import time
 from tempest import config
 from tempest.lib import exceptions as lib_exc
 from tempest import test
@@ -158,7 +159,7 @@ class LinuxNext(manager.LisBase):
         self.change_cpu(self.instance_name, vcpu_count)
         self.set_ram_settings(self.instance_name, memory_assigned)
         for disk in self.disks:
-            self.remove_disk(self.instance_name, disk)
+            self.detach_disk(self.instance_name, disk)
         snapshot_image = self.create_server_snapshot_nocleanup(
             server=self.instance)
         # boot a second instance from the snapshot
