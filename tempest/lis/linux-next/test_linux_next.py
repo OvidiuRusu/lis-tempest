@@ -145,6 +145,7 @@ class LinuxNext(manager.LisBase):
         self.start_vm(self.server_id)
         self._initiate_linux_client(self.floating_ip['floatingip']['floating_ip_address'],
                                     self.ssh_user, self.keypair['private_key'])
+        kernel = self.linux_client.get_kernel_version()
         self.format_disk(1, 'ext4')
         self.linux_client.mount('sdb1')
         self.install_linux_next()
@@ -169,5 +170,10 @@ class LinuxNext(manager.LisBase):
         self.verify_lis(self.instance_name, 'Heartbeat')
         self._initiate_linux_client(self.floating_ip['floatingip']['floating_ip_address'],
                                     self.ssh_user, self.keypair['private_key'])
+        kernel_next = self.linux_client.get_kernel_version()
+        self.assertTrue(kernel != kernel_next,
+                        """Instance didn't boot with linux-next kernel.
+                        Instead it booted with {kernel_next}""".format(
+                            kernel_next=kernel_next))
         self.check_lis_modules()
         self.servers_client.delete_server(self.instance['id'])
